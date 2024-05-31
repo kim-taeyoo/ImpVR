@@ -1,29 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Citizen : MonoBehaviour
 {
     [SerializeField]
-    private GameObject alive;
-    [SerializeField]
-    private GameObject ragdoll;
-    [SerializeField]
     private Rigidbody spineRB;
     [SerializeField]
+    private GameObject skeleton;
+
+
     private Animator anim;
+    private float temp = 1;
 
     // Start is called before the first frame update
     void Awake()
     {
-        alive.SetActive(true);
-        ragdoll.SetActive(false);   
+        anim = GetComponent<Animator>();
+        setRigidbodyState(true);
+        setColliderState(false);
     }
 
     private void OnEnable()
     {
-        alive.SetActive(true);
-        ragdoll.SetActive(false);
+        gameObject.SetActive(true);
+        anim.enabled = true;
+        setRigidbodyState(true);
+        setColliderState(false);
     }
 
     // Update is called once per frame
@@ -42,13 +46,39 @@ public class Citizen : MonoBehaviour
         {
             anim.SetBool("isMoving", false);
         }
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            anim.SetBool("isAttacking", true);
+
+        }
+
+    }
+
+    void setRigidbodyState(bool state)
+    {
+        // 뼈 안에 있는 리지드바디 상태를 제어한다.
+        Rigidbody[] rigidbodies = skeleton.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rigidbody in rigidbodies)
+        {
+            rigidbody.isKinematic = state;
+        }
+    }
+
+    void setColliderState(bool state)
+    {
+        // 뼈 안에 있는 콜라이더 상태를 제어한다.
+        Collider[] colliders = skeleton.GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = state;
+        }
     }
 
     void ObjectDead()
     {
-        alive.SetActive(false);
-        ragdoll.SetActive(true);
-
+        anim.enabled = false;
+        setRigidbodyState(false);
+        setColliderState(true);
         spineRB.AddForce(new Vector3(0, 20f, 10f), ForceMode.VelocityChange);
 
         Invoke("RemoveObject", 2f);

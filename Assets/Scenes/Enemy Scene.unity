@@ -496,8 +496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00f478e40b2a194cb93e0b752d62392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4132312772176831909, guid: 64b182395c0b6744a920c74bce3ece13, type: 3}
-  size: 5
+  prefab: {fileID: 8810835709088884904, guid: 73510b7e50f850946aa53b2aedf1c009, type: 3}
+  size: 25
 --- !u!4 &1315820192
 Transform:
   m_ObjectHideFlags: 0

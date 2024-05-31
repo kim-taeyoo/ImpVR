@@ -49,7 +49,6 @@ public class ObjectPool : MonoBehaviour
     public void InsertBack(PooledObject obj)
     {
         obj.onDisableAction -= InsertBack;
-        obj.gameObject.SetActive(false);
         pool.Enqueue(obj.gameObject);
     }
 }
