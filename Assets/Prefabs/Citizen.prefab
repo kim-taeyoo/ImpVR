@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8073086772555192299}
+  - component: {fileID: 4974342446644160399}
   - component: {fileID: -2482084236764668917}
   - component: {fileID: 2892160747193463383}
   - component: {fileID: 4922707710338499898}
@@ -36,6 +37,18 @@ Transform:
   - {fileID: 1385311092792973940}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4974342446644160399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4132312772176831909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70093d184e58c5944b3bb2d59e695bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-2482084236764668917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,6 +64,7 @@ MonoBehaviour:
   alive: {fileID: 8434589221339364836}
   ragdoll: {fileID: 1761555848332902606}
   spineRB: {fileID: 3306922612511810080}
+  anim: {fileID: 2929119099450096932}
 --- !u!65 &2892160747193463383
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -97,7 +111,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1001 &1491575913973300639
 PrefabInstance:
@@ -1471,6 +1485,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24fc2c3e62c52bf4e9e63fd980b8e85d, type: 3}
+--- !u!95 &2929119099450096932 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 24fc2c3e62c52bf4e9e63fd980b8e85d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8776609558996467893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8434589221339364836 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 24fc2c3e62c52bf4e9e63fd980b8e85d,

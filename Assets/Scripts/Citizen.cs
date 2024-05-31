@@ -10,6 +10,8 @@ public class Citizen : MonoBehaviour
     private GameObject ragdoll;
     [SerializeField]
     private Rigidbody spineRB;
+    [SerializeField]
+    private Animator anim;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,6 +33,15 @@ public class Citizen : MonoBehaviour
         {
             ObjectDead();
         }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            anim.SetBool("isMoving", true);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            anim.SetBool("isMoving", false);
+        }
     }
 
     void ObjectDead()
@@ -46,6 +57,5 @@ public class Citizen : MonoBehaviour
     void RemoveObject()
     {
         gameObject.SetActive(false);
-
     }
 }
