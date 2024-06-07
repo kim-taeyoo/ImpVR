@@ -10,6 +10,9 @@ public class Citizen : MonoBehaviour
     [SerializeField]
     private GameObject skeleton;
 
+    private Rigidbody rb;
+    private bool isMoving = false;
+    private float moveSpeed = 3f;
 
     private Animator anim;
     private float temp = 1;
@@ -18,6 +21,7 @@ public class Citizen : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
         setRigidbodyState(true);
         setColliderState(false);
     }
@@ -41,17 +45,29 @@ public class Citizen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             anim.SetBool("isMoving", true);
+            isMoving = true;
         }
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             anim.SetBool("isMoving", false);
+            isMoving = false;
+
         }
-        if(Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             anim.SetBool("isAttacking", true);
 
         }
 
+    }
+
+    private void FixedUpdate()
+    {
+        if (isMoving)
+        {
+            rb.velocity = transform.forward * moveSpeed;
+        }
     }
 
     void setRigidbodyState(bool state)
