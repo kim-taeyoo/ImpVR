@@ -8,6 +8,8 @@ public class ObjectPoolManager : MonoBehaviour
 
     [SerializeField]
     private ObjectPool citizen;
+    [SerializeField]
+    private ObjectPool archer;
 
     private void Awake()
     {
@@ -20,7 +22,8 @@ public class ObjectPoolManager : MonoBehaviour
     {
         poolDictionary = new Dictionary<string, ObjectPool>
         {
-            { "Citizen", citizen }
+            { "Citizen", citizen },
+            {"Archer", archer }
         };
     }
 

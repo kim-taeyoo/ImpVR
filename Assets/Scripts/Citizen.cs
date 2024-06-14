@@ -12,10 +12,11 @@ public class Citizen : MonoBehaviour
 
     private Rigidbody rb;
     private bool isMoving = false;
-    private float moveSpeed = 3f;
+    private bool isArcher = false;
+    private float moveSpeed = 6f;
 
     private Animator anim;
-    private float temp = 1;
+    private Transform destination;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,6 +30,7 @@ public class Citizen : MonoBehaviour
     private void OnEnable()
     {
         gameObject.SetActive(true);
+        isMoving = false;
         anim.enabled = true;
         setRigidbodyState(true);
         setColliderState(false);
@@ -37,35 +39,28 @@ public class Citizen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Vector3.Distance(transform.position, destination.position) < 1f)
         {
-            ObjectDead();
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            anim.SetBool("isMoving", true);
-            isMoving = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            anim.SetBool("isMoving", false);
             isMoving = false;
 
+            if (isArcher)
+            {
+                anim.SetBool("isMoving", false);
+                anim.SetBool("isAttacking", true);
+                //transform.LookAt(Player);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            anim.SetBool("isAttacking", true);
-
-        }
-
     }
 
     private void FixedUpdate()
     {
         if (isMoving)
         {
+            transform.LookAt(destination.position);
             rb.velocity = transform.forward * moveSpeed;
         }
     }
@@ -90,14 +85,52 @@ public class Citizen : MonoBehaviour
         }
     }
 
+    public void SetDir(Transform dest, bool b)
+    {
+        destination = dest;
+        isArcher = b;
+        transform.LookAt(destination.position);
+        anim.SetBool("isMoving", true);
+        isMoving = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if ( collision.transform.tag == "Citizen")
+        {
+            return;
+        }
+        if (collision.relativeVelocity.magnitude > 13f)
+        {
+            ObjectDead();
+        }
+    }
+
     void ObjectDead()
+    {
+        RagdollOn();
+        spineRB.AddForce(new Vector3(0, 20f, 10f), ForceMode.VelocityChange);
+
+        Invoke("RemoveObject", 2f);
+    }
+
+    void RagdollOn()
     {
         anim.enabled = false;
         setRigidbodyState(false);
         setColliderState(true);
-        spineRB.AddForce(new Vector3(0, 20f, 10f), ForceMode.VelocityChange);
 
-        Invoke("RemoveObject", 2f);
+        //count enemy dead here;
+    }
+
+    public void CatchByHand()
+    {
+        RagdollOn();
+    }
+
+    public void ReleaseFromHand()
+    {
+        Invoke("RemoveObject", 4f);
     }
 
     void RemoveObject()
