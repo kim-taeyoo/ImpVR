@@ -3,16 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Plane
+  - Gun
+  - DeadZone
+  - Enemy
+  - UpgradeExplosionBullet
+  - Hand
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Lever
   - Water
   - UI
-  - 
-  - 
+  - Hand
+  - MagicGesture
   - 
   - 
   - 
