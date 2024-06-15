@@ -6,11 +6,10 @@ using UnityEngine;
 public class Citizen : MonoBehaviour
 {
     [SerializeField]
-    private Rigidbody spineRB;
-    [SerializeField]
     private GameObject skeleton;
 
     private Rigidbody rb;
+    private Collider col;
     private bool isMoving = false;
     private bool isArcher = false;
     private float moveSpeed = 6f;
@@ -23,6 +22,7 @@ public class Citizen : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
         setRigidbodyState(true);
         setColliderState(false);
     }
@@ -31,6 +31,7 @@ public class Citizen : MonoBehaviour
     {
         gameObject.SetActive(true);
         isMoving = false;
+        col.enabled = true;
         anim.enabled = true;
         setRigidbodyState(true);
         setColliderState(false);
@@ -100,6 +101,14 @@ public class Citizen : MonoBehaviour
         {
             return;
         }
+
+        if (collision.transform.tag == "Zombie")
+        {
+            ObjectDead();
+            col.enabled = false;
+            ObjectPoolManager.pm.SpawnFromPool("Zombie",transform.position,Quaternion.identity);
+        }
+
         if (collision.relativeVelocity.magnitude > 13f)
         {
             ObjectDead();
@@ -109,7 +118,6 @@ public class Citizen : MonoBehaviour
     void ObjectDead()
     {
         RagdollOn();
-        spineRB.AddForce(new Vector3(0, 20f, 10f), ForceMode.VelocityChange);
 
         Invoke("RemoveObject", 2f);
     }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grabable
   - Citizen
+  - Zombie
   layers:
   - Default
   - TransparentFX

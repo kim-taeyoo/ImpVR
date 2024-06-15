@@ -10,20 +10,19 @@ public class ObjectPoolManager : MonoBehaviour
     private ObjectPool citizen;
     [SerializeField]
     private ObjectPool archer;
-
-    private void Awake()
-    {
-        pm = this;
-    }
+    [SerializeField]
+    private ObjectPool zombie;
 
     public Dictionary<string, ObjectPool> poolDictionary;
 
-    void Start()
+    private void Awake()
     {
+        if (pm==null) pm = GetComponent<ObjectPoolManager>();
         poolDictionary = new Dictionary<string, ObjectPool>
         {
             { "Citizen", citizen },
-            {"Archer", archer }
+            {"Archer", archer },
+            {"Zombie", zombie }
         };
     }
 

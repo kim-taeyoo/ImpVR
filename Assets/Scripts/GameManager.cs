@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,8 +18,18 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         if (gm == null) gm = GetComponent<GameManager>();
-        StartCoroutine(StartCitizenSpawn());
-        StartCoroutine(StartArcherSpawn());
+        string scene = SceneManager.GetActiveScene().name;
+        if (scene == "Citizen Scene")
+        {
+            StartCoroutine(StartCitizenSpawn());
+            StartCoroutine(StartArcherSpawn());
+        }
+
+        if (scene == "Zombie Scene")
+        {
+            StartCoroutine(StartCitizenSpawn());
+            SpawnZombie();
+        }
     }
 
     void SpawnCitizen()
@@ -43,6 +55,17 @@ public class GameManager : MonoBehaviour
         int n = pseudoRandom.Next(0, 4);
         GameObject go = ObjectPoolManager.pm.SpawnFromPool("Archer", ArcherSpawnPoints[n].position, Quaternion.identity);
         go.GetComponent<Citizen>().SetDir(ArcherAttackPoints[n], true);
+    }
+
+    void SpawnZombie()
+    {
+        System.Random pseudoRandom = new System.Random();
+
+        for (int i=0; i<10; i++)
+        {
+            int n = pseudoRandom.Next(0, 4);
+            GameObject go = ObjectPoolManager.pm.SpawnFromPool("Zombie", ArcherSpawnPoints[n].position, Quaternion.identity);
+        }
     }
 
     IEnumerator StartCitizenSpawn()
