@@ -101,7 +101,7 @@ public class MagicActivationManager : MonoBehaviour
             yield return new WaitForSeconds(.2f); // 0.2초 간격으로 순차적 활성화
 
             magicGestureManager.objects[i].SetActive(true);
-            magicGestureManager.objects[i].GetComponent<AudioSource>().volume = 0.7f;
+            magicGestureManager.objects[i].GetComponent<AudioSource>().volume = 0.5f;
             magicGestureManager.objects[i].GetComponent<AudioSource>().Play();
 
             StartCoroutine(MoveObject(magicGestureManager.objects[i]));
@@ -154,6 +154,7 @@ public class MagicActivationManager : MonoBehaviour
         for (int i = 0; i < magicGestureManager.objects.Length; i++)
         {
             yield return new WaitForSeconds(.2f); // 0.2초 간격으로 순차적 비활성화
+            magicGestureManager.objects[i].GetComponent<AudioSource>().volume = 0.5f;
             magicGestureManager.objects[i].GetComponent<AudioSource>().Play();
 
             StartCoroutine(MoveObjectToBook(magicGestureManager.objects[i]));

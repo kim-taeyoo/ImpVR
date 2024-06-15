@@ -13,7 +13,7 @@ public class MagicGestureTrigger : MonoBehaviour
         if (other.CompareTag("Hand") && MagicActivationManager.Instance.IsActivationComplete) // 활성화 완료된 후에만 동작
         {
             MagicGestureManager.Instance.ActivateObject(objectId);
-            audio.volume = 0.3f;
+            audio.volume = 0.15f;
             audio.Play();
             UpdateObjectState();
 
