@@ -24263,7 +24263,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: e17d4cf0eb579514ebad62e8193d176d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.8
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -24379,4 +24379,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6993f062290b7449a006d9974f595b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 100010, guid: bf6ce3cd3c47ff64cb9bcdfc16964bd6, type: 3}
+  explosion: {fileID: 100006, guid: ae7c9521250779a428ff1ed3b23c9596, type: 3}
