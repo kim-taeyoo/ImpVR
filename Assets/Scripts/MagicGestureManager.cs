@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class MagicGestureManager : MonoBehaviour
 {
@@ -48,6 +49,11 @@ public class MagicGestureManager : MonoBehaviour
     //ui 관련
     public TextMeshProUGUI magicStateText;
     public MagicState currentState;
+    public float currentMP = 200;
+    private float maxMP;
+    public Image mpFillImage;
+    public GameObject mpBar;
+
     public enum MagicState
     {
         None,
@@ -100,11 +106,33 @@ public class MagicGestureManager : MonoBehaviour
         UpdateMagicStateText();
 
         audioSource = GetComponent<AudioSource>();
+        maxMP = currentMP;
     }
 
 
     private void Update()
     {
+        //mp bar
+        mpFillImage.fillAmount = currentMP / maxMP;
+        if(currentMP < 200)
+        {
+            currentMP += Time.deltaTime * 2;
+        }
+        else
+        {
+            currentMP = 200;
+        }
+        /*if (MagicActivationManager.Instance.isMagicActive)
+        {
+            mpBar.SetActive(true);
+            mpFillImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            mpBar.SetActive(false);
+            mpFillImage.gameObject.SetActive(false);
+        }*/
+
         selectValue = leftSelectAnimationAction.action.ReadValue<float>() != 0 || rightSelectAnimationAction.action.ReadValue<float>() != 0;
 
         // 활성화 타이머 갱신
@@ -134,130 +162,135 @@ public class MagicGestureManager : MonoBehaviour
         currentState = MagicState.None;
         if (!isUpgrade)
         {
-            if (AreSpecificObjectsActive(0))
+            if (currentMP > 10)
             {
-                currentState = MagicState.Blueball;
-                if (selectValue)
+                if (AreSpecificObjectsActive(0))
                 {
-                    ShootSkill(SkillType.Blueball);
-                    currentState = MagicState.None;
+                    currentState = MagicState.Blueball;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.Blueball);
+                        currentState = MagicState.None;
+                    }
                 }
+                if (AreSpecificObjectsActive(1, 2))
+                {
+                    currentState = MagicState.FireBall;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.FireBall);
+                        currentState = MagicState.None;
+                    }
+                }
+                if (AreSpecificObjectsActive(3, 4))
+                {
+                    currentState = MagicState.IceBall;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.IceBall);
+                        currentState = MagicState.None;
+                    }
+                }
+                //업그레이드
+                if (!isUpgrade && AreSpecificObjectsActive(0, 1, 2))
+                {
+                    currentState = MagicState.Upgrade;
+                    if (selectValue)
+                    {
+                        ActiveUpgradeState();
+                        currentState = MagicState.None;
+                        audioSource.Play();
+                    }
+                }
+                if (AreSpecificObjectsActive(1, 2, 3))
+                {
+                    currentState = MagicState.Kunai;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.Kunai);
+                        currentState = MagicState.None;
+                    }
+                }
+                if (AreSpecificObjectsActive(1, 2, 3, 4))
+                {
+                    currentState = MagicState.LightningBall;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.LightningBall);
+                        currentState = MagicState.None;
+                    }
+                }
+                if (AreSpecificObjectsActive(0, 1, 2, 3, 4))
+                {
+                    currentState = MagicState.ElementalBall;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.ElementalBall);
+                        currentState = MagicState.None;
+                    }
+                }   
             }
-            if (AreSpecificObjectsActive(1, 2))
-            {
-                currentState = MagicState.FireBall;
-                if (selectValue)
-                {
-                    ShootSkill(SkillType.FireBall);
-                    currentState = MagicState.None;
-                }
-            }
-            if (AreSpecificObjectsActive(3, 4))
-            {
-                currentState = MagicState.IceBall;
-                if (selectValue)
-                {
-                    ShootSkill(SkillType.IceBall);
-                    currentState = MagicState.None;
-                }
-            }
-            //업그레이드
-            if (!isUpgrade && AreSpecificObjectsActive(0, 1, 2))
-            {
-                currentState = MagicState.Upgrade;
-                if (selectValue)
-                {
-                    ActiveUpgradeState();
-                    currentState = MagicState.None;
-                    audioSource.Play();
-                }
-            }
-            if (AreSpecificObjectsActive(1, 2, 3))
-            {
-                Debug.Log("쿠나이");
-                currentState = MagicState.Kunai;
-                if (selectValue)
-                {
-                    ShootSkill(SkillType.Kunai);
-                    currentState = MagicState.None;
-                }
-            }
-            if (AreSpecificObjectsActive(1, 2, 3, 4))
-            {
-                currentState = MagicState.LightningBall;
-                if (selectValue)
-                {
-                    ShootSkill(SkillType.LightningBall);
-                    currentState = MagicState.None;
-                }
-            }
-            if (AreSpecificObjectsActive(0, 1, 2, 3, 4))
-            {
-                currentState = MagicState.ElementalBall;
-                if (selectValue)
-                {
-                    ShootSkill(SkillType.ElementalBall);
-                    currentState = MagicState.None;
-                }
-            }  
         }
         //업그레이드 이후
         else
-        {        
-            if (AreSpecificObjectsActive(0))
+        {
+            if (currentMP > 15)
             {
-                currentState = MagicState.ElementalArrow;
-                if (selectValue)
+                if (AreSpecificObjectsActive(0))
                 {
-                    ShootSkill(SkillType.ElementalArrow);
-                    currentState = MagicState.None;
+                    currentState = MagicState.ElementalArrow;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.ElementalArrow);
+                        currentState = MagicState.None;
+                    }
                 }
-            }
-            if (AreSpecificObjectsActive(1, 2))
-            {
-                currentState = MagicState.DeadBall;
-                if (selectValue)
+                if (AreSpecificObjectsActive(1, 2))
                 {
-                    ShootSkill(SkillType.DeadBall);
-                    currentState = MagicState.None;
+                    currentState = MagicState.DeadBall;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.DeadBall);
+                        currentState = MagicState.None;
+                    }
                 }
-            }
-            if (AreSpecificObjectsActive(3, 4))
-            {
-                currentState = MagicState.IceStorm;
-                if (selectValue)
+                if (AreSpecificObjectsActive(3, 4))
                 {
-                    ShootSkill(SkillType.IceStorm);
-                    currentState = MagicState.None;
+                    currentState = MagicState.IceStorm;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.IceStorm);
+                        currentState = MagicState.None;
+                    }
                 }
-            }
-            if (AreSpecificObjectsActive(1, 2, 3))
-            {
-                currentState = MagicState.PentaKunai;
-                if (selectValue)
+                if (AreSpecificObjectsActive(1, 2, 3))
                 {
-                    ShootSkill(SkillType.PentaKunai);
-                    currentState = MagicState.None;
+                    currentState = MagicState.PentaKunai;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.PentaKunai);
+                        currentState = MagicState.None;
+                    }
                 }
-            }
-            if (AreSpecificObjectsActive(1, 2, 3, 4))
-            {
-                currentState = MagicState.LigthningArrow;
-                if (selectValue)
+                if (AreSpecificObjectsActive(1, 2, 3, 4))
                 {
-                    ShootSkill(SkillType.LigthningArrow);
-                    currentState = MagicState.None;
-                }
+                    currentState = MagicState.LigthningArrow;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.LigthningArrow);
+                        currentState = MagicState.None;
+                    }
 
-            }
-            if (AreSpecificObjectsActive(0, 1, 2, 3, 4))
-            {
-                currentState = MagicState.ElementalArrow2;
-                if (selectValue)
-                {
-                    ShootSkill(SkillType.ElementalArrow2);
-                    currentState = MagicState.None;
                 }
+                if (AreSpecificObjectsActive(0, 1, 2, 3, 4))
+                {
+                    currentState = MagicState.ElementalArrow2;
+                    if (selectValue)
+                    {
+                        ShootSkill(SkillType.ElementalArrow2);
+                        currentState = MagicState.None;
+                    }
+                } 
             }
         }
         UpdateMagicStateText();
@@ -312,6 +345,14 @@ public class MagicGestureManager : MonoBehaviour
     private void ShootSkill(SkillType skillType)
     {
         isUpgrade = false;
+        if (!isUpgrade)
+        {
+            currentMP -= 10;
+        }
+        else
+        {
+            currentMP -= 15;
+        }
         // 스킬 프리팹을 사용하여 오브젝트 생성 및 발사
         if (skillPrefabs.TryGetValue(skillType, out GameObject skillPrefab))
         {

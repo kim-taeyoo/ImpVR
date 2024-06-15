@@ -20,7 +20,7 @@ public class MagicActivationManager : MonoBehaviour
     private Material ring2Material;
 
     private bool isTransitioning = false; // p 버튼의 연속 입력 방지
-    private bool isMagicActive = false; // 마법 사용 활성화 상태
+    public bool isMagicActive = false; // 마법 사용 활성화 상태
 
     // 활성화 상태 완료 플래그
     public bool IsActivationComplete { get; private set; } = false;
