@@ -16,34 +16,56 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         if (gm == null) gm = GetComponent<GameManager>();
+        StartCoroutine(StartCitizenSpawn());
+        StartCoroutine(StartArcherSpawn());
     }
 
-    // Update is called once per frame
-    void Update()
+    void SpawnCitizen()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            System.Random pseudoRandom = new System.Random();
+        System.Random pseudoRandom = new System.Random();
 
-            int n = pseudoRandom.Next(0, 6);
-            GameObject go = ObjectPoolManager.pm.SpawnFromPool("Citizen", CitizenSpawnPoints[n].position, Quaternion.identity);
-            if (n % 2 == 0)
-            {
-                go.GetComponent<Citizen>().SetDir(CitizenSpawnPoints[n + 1], false);
-            }
-            else
-            {
-                go.GetComponent<Citizen>().SetDir(CitizenSpawnPoints[n - 1], false);
-            }
+        int n = pseudoRandom.Next(0, 6);
+        GameObject go = ObjectPoolManager.pm.SpawnFromPool("Citizen", CitizenSpawnPoints[n].position, Quaternion.identity);
+        if (n % 2 == 0)
+        {
+            go.GetComponent<Citizen>().SetDir(CitizenSpawnPoints[n + 1], false);
         }
-
-        if (Input.GetKeyDown(KeyCode.A))
+        else
         {
-            System.Random pseudoRandom = new System.Random();
+            go.GetComponent<Citizen>().SetDir(CitizenSpawnPoints[n - 1], false);
+        }
+    }
 
-            int n = pseudoRandom.Next(0, 4);
-            GameObject go = ObjectPoolManager.pm.SpawnFromPool("Archer", ArcherSpawnPoints[n].position, Quaternion.identity);
-            go.GetComponent<Citizen>().SetDir(ArcherAttackPoints[n], true);
+    void SpawnArcher()
+    {
+        System.Random pseudoRandom = new System.Random();
+
+        int n = pseudoRandom.Next(0, 4);
+        GameObject go = ObjectPoolManager.pm.SpawnFromPool("Archer", ArcherSpawnPoints[n].position, Quaternion.identity);
+        go.GetComponent<Citizen>().SetDir(ArcherAttackPoints[n], true);
+    }
+
+    IEnumerator StartCitizenSpawn()
+    {
+        yield return new WaitForSeconds(2f);
+
+        while (true)
+        {
+            SpawnCitizen();
+            float n = Random.Range(0.5f,1.5f);
+            yield return new WaitForSeconds(n);
+        }
+    }
+
+    IEnumerator StartArcherSpawn()
+    {
+        yield return new WaitForSeconds(2f);
+
+        while (true)
+        {
+            SpawnArcher();
+            float n = Random.Range(0.5f,1.5f);
+            yield return new WaitForSeconds(n);
         }
     }
 }
