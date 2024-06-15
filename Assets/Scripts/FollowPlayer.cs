@@ -9,10 +9,10 @@ public class FollowPlayer : MonoBehaviour
     public bool followRotation = false;
     public bool ready = true;
 
-    private Quaternion initialRotation;
-    private float initialTargetYRotation;
-    float currentTargetYRotation;
-    float deltaYRotation;
+    public Quaternion initialRotation;
+    public float initialTargetYRotation;
+    public float currentTargetYRotation;
+    public float deltaYRotation;
 
     void Awake()
     {

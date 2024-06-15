@@ -14538,6 +14538,7 @@ GameObject:
   - component: {fileID: -3709233007971830036}
   - component: {fileID: -8511781193279939715}
   - component: {fileID: 5685516553636006691}
+  - component: {fileID: 4457736753180371077}
   m_Layer: 0
   m_Name: IceBall
   m_TagString: Untagged
@@ -14555,7 +14556,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 400004}
@@ -14601,9 +14602,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8dfdac67552b41743b09a165f6cf934d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9a715626a568a2e4aae19d75e4ea76a9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -14708,6 +14709,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4457736753180371077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b6993f062290b7449a006d9974f595b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 100006, guid: 738d308a031b2664bb0f9ebcfefb2da9, type: 3}
 --- !u!1 &100008
 GameObject:
   m_ObjectHideFlags: 0
