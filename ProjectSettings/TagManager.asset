@@ -4,18 +4,27 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Grabable
   - Citizen
   - Zombie
+=======
+  - Plane
+  - Gun
+  - DeadZone
+  - Enemy
+  - UpgradeExplosionBullet
+  - Hand
+>>>>>>> origin/Kimtaeyu
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Lever
   - Water
   - UI
-  - 
-  - 
+  - Hand
+  - MagicGesture
   - 
   - 
   - 
