@@ -366,7 +366,7 @@ public class MagicGestureManager : MonoBehaviour
 
             Destroy(skillInstance, 5f);
         }
-
+        MagicActivationManager.Instance.Haptic(0.5f, 0.7f);
         Reset();
     }
 

@@ -14,6 +14,8 @@ public class MagicSkill : MonoBehaviour
             GameObject spawnedObject = Instantiate(explosion, transform.position, transform.rotation);
             Destroy(spawnedObject, 3f);
 
+            MagicActivationManager.Instance.Haptic(1, 2);
+
             Destroy(gameObject);
         }
     }

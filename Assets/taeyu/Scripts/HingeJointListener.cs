@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class HingeJointListener : MonoBehaviour
 {
-    AudioSource audio;
+    AudioSource audioSource;
     private bool soundPlay = false;
 
     // how many degrees from min/max the hinge has to be 
@@ -38,7 +38,7 @@ public class HingeJointListener : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         // try to get hinge joint if it is not assigned
         if(joint == null)
         {
@@ -90,7 +90,7 @@ public class HingeJointListener : MonoBehaviour
             {
                 if (!soundPlay)
                 {
-                    audio.Play();
+                    audioSource.Play();
                     soundPlay = true;
                 }
                 OnBetweenReached.Invoke();

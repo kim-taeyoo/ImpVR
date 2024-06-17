@@ -6,15 +6,15 @@ public class MagicGestureTrigger : MonoBehaviour
     public Material orb;
     public Material orbNonselect;
     public Animator animator;
-    public AudioSource audio;
+    public AudioSource audioSource;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Hand") && MagicActivationManager.Instance.IsActivationComplete) // 활성화 완료된 후에만 동작
         {
             MagicGestureManager.Instance.ActivateObject(objectId);
-            audio.volume = 0.15f;
-            audio.Play();
+            audioSource.volume = 0.8f;
+            audioSource.Play();
             UpdateObjectState();
 
         }
