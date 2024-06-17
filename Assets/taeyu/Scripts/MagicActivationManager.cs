@@ -1,9 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class MagicActivationManager : MonoBehaviour
 {
+    //컨트롤러
+    public XRBaseController leftController;
+    public XRBaseController rightController;
+
     public InputActionProperty ActiveMagicBookAnimationAction1;
     public InputActionProperty ActiveMagicBookAnimationAction2;
     bool activeMagicBook = false;
@@ -312,5 +317,11 @@ public class MagicActivationManager : MonoBehaviour
         // 최종적으로 완전히 불투명하게 설정
         Color finalColor = material.color;
         material.color = new Color(finalColor.r, finalColor.g, finalColor.b, 1);
+    }
+
+    public void Haptic(float intensity, float duration)
+    {
+        leftController.SendHapticImpulse(intensity, duration);
+        rightController.SendHapticImpulse(intensity, duration);
     }
 }
