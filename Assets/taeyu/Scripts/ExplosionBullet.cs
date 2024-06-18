@@ -73,6 +73,7 @@ public class ExplosionBullet : MonoBehaviour
             currentRadius *= 2;
         }
 
+        MagicActivationManager.Instance.Haptic(1, 1.3f);
         // 충돌 지점에서 일정 거리 내에 있는 모든 Enemy 태그를 가진 오브젝트 처리
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, currentRadius);
         foreach (var hitCollider in hitColliders)
