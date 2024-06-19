@@ -17,6 +17,8 @@ public class Citizen : MonoBehaviour
     private Animator anim;
     private Transform destination;
 
+    public GameObject player;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -35,6 +37,7 @@ public class Citizen : MonoBehaviour
         anim.enabled = true;
         setRigidbodyState(true);
         setColliderState(false);
+        player = GameObject.Find("XR Origin (XR Rig)");
     }
 
     // Update is called once per frame
@@ -48,12 +51,18 @@ public class Citizen : MonoBehaviour
             {
                 anim.SetBool("isMoving", false);
                 anim.SetBool("isAttacking", true);
-                //transform.LookAt(Camera.main.transform);
+                transform.LookAt(player.transform);
+                //transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
             }
             else
             {
                 gameObject.SetActive(false);
             }
+        }
+        if(anim.GetBool("isAttacking") == true)
+        {
+            transform.LookAt(player.transform);
+
         }
     }
 
