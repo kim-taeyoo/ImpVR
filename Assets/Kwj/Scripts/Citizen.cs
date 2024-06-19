@@ -2,25 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class zombie : MonoBehaviour
+public class Citizen : MonoBehaviour
 {
     [SerializeField]
     private GameObject skeleton;
+    [SerializeField]
+    private Rigidbody root;
 
     private Rigidbody rb;
+    private Collider col;
     private bool isMoving = false;
-    private bool isAttacking = false;
-    private float moveSpeed = 2f;
+    private bool isArcher = false;
+    private float moveSpeed = 6f;
 
     private Animator anim;
-    private Transform target;
+    private Transform destination;
 
     // Start is called before the first frame update
     void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
         setRigidbodyState(true);
         setColliderState(false);
     }
@@ -29,6 +34,7 @@ public class zombie : MonoBehaviour
     {
         gameObject.SetActive(true);
         isMoving = false;
+        col.enabled = true;
         anim.enabled = true;
         setRigidbodyState(true);
         setColliderState(false);
@@ -37,33 +43,33 @@ public class zombie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
-        if (colliders.Length > 0 )
+        if (Vector3.Distance(transform.position, destination.position) < 1f)
         {
-            foreach (Collider c in colliders)
-            {
-                if (c.tag == "Citizen")
-                {
-                    target = c.transform;
-                    isMoving = true;
-                    anim.SetBool("isWalking", true);
+            isMoving = false;
 
-                    break;
-                }
-                else
-                {
-                    isMoving = false;
-                    anim.SetBool("isWalking", false);
-                }
+            if (isArcher)
+            {
+                anim.SetBool("isMoving", false);
+                anim.SetBool("isAttacking", true);
+                transform.LookAt(TownGameManager.tgm.player.transform.position);
+            }
+            else
+            {
+                gameObject.SetActive(false);
             }
         }
+    }
+
+    public void Attack()
+    {
+        TownGameManager.tgm.updateHealth();
     }
 
     private void FixedUpdate()
     {
         if (isMoving)
         {
-            transform.LookAt(target.position);
+            transform.LookAt(destination.position);
             rb.velocity = transform.forward * moveSpeed;
         }
     }
@@ -88,13 +94,39 @@ public class zombie : MonoBehaviour
         }
     }
 
+    public void SetDir(Transform dest, bool b)
+    {
+        destination = dest;
+        isArcher = b;
+        transform.LookAt(destination.position);
+        anim.SetBool("isMoving", true);
+        isMoving = true;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if ( collision.transform.tag == "Citizen" || collision.transform.tag == "Zombie")
+        if ( collision.transform.tag == "Citizen")
         {
             return;
         }
+
+        if (collision.transform.tag == "Zombie")
+        {
+            ObjectDead();
+            CityGameManager.cgm.updateRemain(1);
+            col.enabled = false;
+            ObjectPoolManager.pm.SpawnFromPool("Zombie",transform.position,Quaternion.identity);
+        }
+
         if (collision.relativeVelocity.magnitude > 13f)
+        {
+            ObjectDead();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Magic")
         {
             ObjectDead();
         }
@@ -113,17 +145,29 @@ public class zombie : MonoBehaviour
         setRigidbodyState(false);
         setColliderState(true);
 
-        //count enemy dead here;
+        string scene = SceneManager.GetActiveScene().name;
+        
+        if (scene == "Citizen Scene")
+        {
+            TownGameManager.tgm.updateRemain();
+        }
+        if (scene == "Zombie Scene")
+        {
+            CityGameManager.cgm.updateHealth();
+        }
     }
 
     public void CatchByHand()
     {
         RagdollOn();
+
+        root.isKinematic = true;
     }
 
     public void ReleaseFromHand()
     {
         Invoke("RemoveObject", 4f);
+        root.isKinematic=false;
     }
 
     void RemoveObject()
