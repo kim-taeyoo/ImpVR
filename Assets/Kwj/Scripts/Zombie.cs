@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Citizen : MonoBehaviour
+public class zombie : MonoBehaviour
 {
     [SerializeField]
     private GameObject skeleton;
 
     private Rigidbody rb;
-    private Collider col;
     private bool isMoving = false;
-    private bool isArcher = false;
-    private float moveSpeed = 6f;
+    private bool isAttacking = false;
+    private float moveSpeed = 2f;
 
     private Animator anim;
-    private Transform destination;
+    private Transform target;
 
     // Start is called before the first frame update
     void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        col = GetComponent<Collider>();
         setRigidbodyState(true);
         setColliderState(false);
     }
@@ -31,7 +29,6 @@ public class Citizen : MonoBehaviour
     {
         gameObject.SetActive(true);
         isMoving = false;
-        col.enabled = true;
         anim.enabled = true;
         setRigidbodyState(true);
         setColliderState(false);
@@ -40,29 +37,38 @@ public class Citizen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, destination.position) < 1f)
-        {
-            isMoving = false;
 
-            if (isArcher)
-            {
-                anim.SetBool("isMoving", false);
-                anim.SetBool("isAttacking", true);
-                //transform.LookAt(Camera.main.transform);
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
-        }
     }
 
     private void FixedUpdate()
     {
+        isMoving = false;
+        anim.SetBool("isWalking", false);
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+        if (colliders.Length > 0)
+        {
+            foreach (Collider c in colliders)
+            {
+                if (c.tag == "Citizen")
+                {
+                    target = c.transform;
+                    isMoving = true;
+                    anim.SetBool("isWalking", true);
+
+                    break;
+                }
+            }
+        }
+
         if (isMoving)
         {
-            transform.LookAt(destination.position);
+            transform.LookAt(target.position);
             rb.velocity = transform.forward * moveSpeed;
+        }
+        else
+        {
+            transform.rotation = Quaternion.identity;
         }
     }
 
@@ -86,38 +92,13 @@ public class Citizen : MonoBehaviour
         }
     }
 
-    public void SetDir(Transform dest, bool b)
-    {
-        destination = dest;
-        isArcher = b;
-        transform.LookAt(destination.position);
-        anim.SetBool("isMoving", true);
-        isMoving = true;
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if ( collision.transform.tag == "Citizen")
+        if ( collision.transform.tag == "Citizen" || collision.transform.tag == "Zombie")
         {
             return;
         }
-
-        if (collision.transform.tag == "Zombie")
-        {
-            ObjectDead();
-            col.enabled = false;
-            ObjectPoolManager.pm.SpawnFromPool("Zombie",transform.position,Quaternion.identity);
-        }
-
         if (collision.relativeVelocity.magnitude > 13f)
-        {
-            ObjectDead();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Magic")
         {
             ObjectDead();
         }
@@ -136,7 +117,7 @@ public class Citizen : MonoBehaviour
         setRigidbodyState(false);
         setColliderState(true);
 
-        //count enemy dead here;
+        CityGameManager.cgm.updateRemain(-1);
     }
 
     public void CatchByHand()

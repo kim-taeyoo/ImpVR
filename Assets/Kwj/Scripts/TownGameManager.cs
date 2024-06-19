@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class TownGameManager : MonoBehaviour
 {
     [SerializeField]
     private Transform[] CitizenSpawnPoints = new Transform[6];
@@ -13,23 +15,32 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform[] ArcherAttackPoints = new Transform[4];
 
-    public static GameManager gm;
+    [SerializeField]
+    private Slider hpSlider;
+    [SerializeField]
+    private TMP_Text remainCount;
+
+    public GameObject player;
+
+    private float remain;
+    private int healthPoints;
+
+    public static TownGameManager tgm;
     // Start is called before the first frame update
     void Awake()
     {
-        if (gm == null) gm = GetComponent<GameManager>();
-        string scene = SceneManager.GetActiveScene().name;
-        if (scene == "Citizen Scene")
-        {
-            StartCoroutine(StartCitizenSpawn());
-            StartCoroutine(StartArcherSpawn());
-        }
+        if (tgm == null) tgm = GetComponent<TownGameManager>();
 
-        if (scene == "Zombie Scene")
-        {
-            StartCoroutine(StartCitizenSpawn());
-            SpawnZombie();
-        }
+        StartCoroutine(StartCitizenSpawn());
+        StartCoroutine(StartArcherSpawn());
+
+        remain = 200;
+        healthPoints = 500;
+
+        remainCount.text = remain.ToString();
+        hpSlider.minValue = 0;
+        hpSlider.maxValue = healthPoints;
+        hpSlider.value = healthPoints;
     }
 
     void SpawnCitizen()
@@ -57,15 +68,16 @@ public class GameManager : MonoBehaviour
         go.GetComponent<Citizen>().SetDir(ArcherAttackPoints[n], true);
     }
 
-    void SpawnZombie()
+    public void updateRemain()
     {
-        System.Random pseudoRandom = new System.Random();
+        remain--;
+        remainCount.text = remain.ToString();
+    }
 
-        for (int i=0; i<10; i++)
-        {
-            int n = pseudoRandom.Next(0, 4);
-            GameObject go = ObjectPoolManager.pm.SpawnFromPool("Zombie", ArcherSpawnPoints[n].position, Quaternion.identity);
-        }
+    public void updateHealth()
+    {
+        healthPoints--;
+        hpSlider.value = healthPoints;
     }
 
     IEnumerator StartCitizenSpawn()
