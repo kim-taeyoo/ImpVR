@@ -3,27 +3,7 @@ guid: 25c507bb1a0c5d14ca011dfdcb8e36ac
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MagicOrb
-    second: {fileID: 2100000, guid: 240f267dd622e854fadbc6666361b28d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MagicOrb.Crystal
-    second: {fileID: 2100000, guid: 240f267dd622e854fadbc6666361b28d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MagicOrb.Crystal.Idle
-    second: {fileID: 2100000, guid: 240f267dd622e854fadbc6666361b28d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MagicOrb.Idle
-    second: {fileID: 2100000, guid: 240f267dd622e854fadbc6666361b28d, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
