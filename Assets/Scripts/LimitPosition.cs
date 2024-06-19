@@ -10,6 +10,8 @@ public class LimitPosition : MonoBehaviour
 
     bool isZombieStage = false;
 
+    Vector3 deadPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,7 @@ public class LimitPosition : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isZombieStage)
+        if (!TownGameManager.tgm.isGameOver)
         {
             if (transform.position.z < 1)
             {
@@ -39,6 +41,11 @@ public class LimitPosition : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y, 25);
             }
+        }
+        else if (TownGameManager.tgm.isGameOver)
+        {
+            //deadPosition = transform.position;
+            transform.position = new Vector3(deadPosition.x, transform.position.y, -1);
         }
         MagicRay();
     }

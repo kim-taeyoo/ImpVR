@@ -26,6 +26,14 @@ public class TownGameManager : MonoBehaviour
     private int healthPoints;
 
     public static TownGameManager tgm;
+
+    public GameObject UI1;
+    public GameObject UI2;
+    public GameObject clearUI;
+    public GameObject gameoverUI;
+    public bool gameClear = false;
+    public bool isGameOver = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -72,12 +80,22 @@ public class TownGameManager : MonoBehaviour
     {
         remain--;
         remainCount.text = remain.ToString();
+        if(remain <= 0)
+        {
+            remain = 0;
+            GameClear();
+        }
     }
 
     public void updateHealth()
     {
         healthPoints--;
         hpSlider.value = healthPoints;
+        if(healthPoints <= 0)
+        {
+            healthPoints = 0;
+            GameOver();
+        }
     }
 
     IEnumerator StartCitizenSpawn()
@@ -102,5 +120,22 @@ public class TownGameManager : MonoBehaviour
             float n = Random.Range(0.5f,1.5f);
             yield return new WaitForSeconds(n);
         }
+    }
+
+    void GameClear()
+    {
+        UI1.SetActive(false);
+        UI2.SetActive(false);
+        clearUI.SetActive(true);
+        gameClear = true;
+    }
+
+    void GameOver()
+    {
+        UI1.SetActive(false);
+        UI2.SetActive(false);
+        gameoverUI.SetActive(true);
+        isGameOver = true;
+
     }
 }
