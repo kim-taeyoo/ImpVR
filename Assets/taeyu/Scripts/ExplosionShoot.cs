@@ -16,6 +16,8 @@ public class ExplosionShoot : MonoBehaviour
 
     private bool isUpgrade = false;
 
+    private int bullet = 5;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -41,7 +43,7 @@ public class ExplosionShoot : MonoBehaviour
         Quaternion bulletRotation = Quaternion.LookRotation(transform.right);
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.velocity = transform.right * 15f;
+        rb.velocity = transform.right * 30f;
 
         // isUpgrade가 true일 때 태그 변경
         if (isUpgrade)
@@ -61,9 +63,10 @@ public class ExplosionShoot : MonoBehaviour
 
     public void Fire()
     {
-        if (canShoot)
+        if (canShoot && isUpgrade && bullet > 0)
         {
             shoot = true;
+            bullet--;
         }
     }
 
