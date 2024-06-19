@@ -6009,7 +6009,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 3f3cbafb2457af24dbe285b98a57c2f4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6766,7 +6766,7 @@ PrefabInstance:
     - target: {fileID: 5817383479480238018, guid: a63014abbd0fcb4488c0c030ee3efadf,
         type: 3}
       propertyPath: m_Volume
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5817383479480238018, guid: a63014abbd0fcb4488c0c030ee3efadf,
         type: 3}
@@ -10403,7 +10403,7 @@ PrefabInstance:
     - target: {fileID: 4291090639859906602, guid: bc2ffd4594c0e584d9c044db9dcd50f0,
         type: 3}
       propertyPath: m_Volume
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4291090639859906602, guid: bc2ffd4594c0e584d9c044db9dcd50f0,
         type: 3}
@@ -11639,7 +11639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1302787039}
-  offset: {x: 0.6, y: -0.5, z: 0.5}
+  offset: {x: 0.5, y: -0.5, z: 0.3}
   followRotation: 0
   ready: 1
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -12864,7 +12864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4118427c05a0947a20c47d7012653c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1302787039}
+  target: {fileID: 1499192892}
   offset: {x: -0.6, y: -0.5, z: 1.5}
 --- !u!65 &877478616
 BoxCollider:
@@ -16313,7 +16313,7 @@ PrefabInstance:
     - target: {fileID: 2716837522144199398, guid: 0dc10968d0b79bb44a32272244df9dbe,
         type: 3}
       propertyPath: m_Volume
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2716837522144199398, guid: 0dc10968d0b79bb44a32272244df9dbe,
         type: 3}
@@ -17091,6 +17091,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MagicBook
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269387730698798982, guid: 2e0df5c940e0a9643bda32a12b0b22c9,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 5269387730698798982, guid: 2e0df5c940e0a9643bda32a12b0b22c9,
         type: 3}
@@ -18742,7 +18747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1302787039}
-  offset: {x: -0.6, y: -0.5, z: 0.5}
+  offset: {x: -0.5, y: -0.5, z: 0.3}
   followRotation: 0
   ready: 1
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -23306,7 +23311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4118427c05a0947a20c47d7012653c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1302787039}
+  target: {fileID: 815289534}
   offset: {x: 0.6, y: -0.5, z: 1.5}
 --- !u!114 &1893351751 stripped
 MonoBehaviour:
@@ -23448,7 +23453,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -25615,7 +25620,7 @@ PrefabInstance:
     - target: {fileID: 317860837945395990, guid: 55c6b9741276d4e4bbed237e005b6349,
         type: 3}
       propertyPath: m_Volume
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 317860837945395990, guid: 55c6b9741276d4e4bbed237e005b6349,
         type: 3}
@@ -25903,7 +25908,7 @@ PrefabInstance:
     - target: {fileID: 4393313485558074075, guid: f3b9d24d471146047a71c59ac687dfbd,
         type: 3}
       propertyPath: m_Volume
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4393313485558074075, guid: f3b9d24d471146047a71c59ac687dfbd,
         type: 3}

@@ -18,6 +18,8 @@ public class FollowPlayer : MonoBehaviour
     {
         initialRotation = transform.rotation;
         initialTargetYRotation = target.eulerAngles.y;
+        transform.position = target.position + Vector3.up * offset.y + Vector3.ProjectOnPlane(target.right, Vector3.up).normalized * offset.x + Vector3.ProjectOnPlane(target.forward, Vector3.up).normalized * offset.z;
+
     }
 
     void Update()

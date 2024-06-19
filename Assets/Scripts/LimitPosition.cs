@@ -31,7 +31,7 @@ public class LimitPosition : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /*if (!TownGameManager.tgm.isGameOver)
+        if (!TownGameManager.tgm.isGameOver)
         {
             if (transform.position.z < 1)
             {
@@ -46,7 +46,7 @@ public class LimitPosition : MonoBehaviour
         {
             //deadPosition = transform.position;
             transform.position = new Vector3(deadPosition.x, transform.position.y, -1);
-        }*/
+        }
         MagicRay();
     }
 

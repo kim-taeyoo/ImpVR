@@ -10,10 +10,10 @@ public class ClimbGoal : MonoBehaviour
     {
         if(other.gameObject.tag == "ClimbGoal")
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         } else if(other.gameObject.tag == "ClimbDead")
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
     }
 }
