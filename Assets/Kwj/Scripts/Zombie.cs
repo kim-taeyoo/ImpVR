@@ -104,6 +104,14 @@ public class zombie : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Magic")
+        {
+            ObjectDead();
+        }
+    }
+
     void ObjectDead()
     {
         RagdollOn();
