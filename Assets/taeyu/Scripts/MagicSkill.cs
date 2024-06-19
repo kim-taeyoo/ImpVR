@@ -11,10 +11,10 @@ public class MagicSkill : MonoBehaviour
     {
         if (other.CompareTag("Plane"))
         {
-            GameObject spawnedObject = Instantiate(explosion, transform.position, transform.rotation);
+            GameObject spawnedObject = Instantiate(explosion, transform.position + Vector3.up, transform.rotation);
             Destroy(spawnedObject, 3f);
 
-            MagicActivationManager.Instance.Haptic(1, 2);
+            MagicActivationManager.Instance.Haptic(1, 0.5f);
 
             Destroy(gameObject);
         }

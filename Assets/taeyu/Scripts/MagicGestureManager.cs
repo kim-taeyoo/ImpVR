@@ -361,7 +361,7 @@ public class MagicGestureManager : MonoBehaviour
             rb.useGravity = false;
             if (rb != null)
             {
-                rb.velocity = player.transform.forward * 10f;
+                rb.velocity = player.transform.forward * 50f;
             }
 
             Destroy(skillInstance, 5f);
