@@ -10,7 +10,7 @@ public class zombie : MonoBehaviour
 
     private Rigidbody rb;
     private bool isMoving = false;
-    private bool isAttacking = false;
+    //private bool isAttacking = false;
     private float moveSpeed = 2f;
 
     private Animator anim;

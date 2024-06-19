@@ -4,7 +4,7 @@ using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class TownGameManager : MonoBehaviour
 {
     [SerializeField]
     private Transform[] CitizenSpawnPoints = new Transform[6];
@@ -13,23 +13,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform[] ArcherAttackPoints = new Transform[4];
 
-    public static GameManager gm;
+    public static TownGameManager tgm;
     // Start is called before the first frame update
     void Awake()
     {
-        if (gm == null) gm = GetComponent<GameManager>();
-        string scene = SceneManager.GetActiveScene().name;
-        if (scene == "Citizen Scene")
-        {
-            StartCoroutine(StartCitizenSpawn());
-            StartCoroutine(StartArcherSpawn());
-        }
+        if (tgm == null) tgm = GetComponent<TownGameManager>();
 
-        if (scene == "Zombie Scene")
-        {
-            StartCoroutine(StartCitizenSpawn());
-            SpawnZombie();
-        }
+        StartCoroutine(StartCitizenSpawn());
+        StartCoroutine(StartArcherSpawn());
+
     }
 
     void SpawnCitizen()
@@ -57,17 +49,6 @@ public class GameManager : MonoBehaviour
         go.GetComponent<Citizen>().SetDir(ArcherAttackPoints[n], true);
     }
 
-    void SpawnZombie()
-    {
-        System.Random pseudoRandom = new System.Random();
-
-        for (int i=0; i<10; i++)
-        {
-            int n = pseudoRandom.Next(0, 4);
-            GameObject go = ObjectPoolManager.pm.SpawnFromPool("Zombie", ArcherSpawnPoints[n].position, Quaternion.identity);
-        }
-    }
-
     IEnumerator StartCitizenSpawn()
     {
         yield return new WaitForSeconds(2f);
@@ -75,7 +56,7 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             SpawnCitizen();
-            float n = Random.Range(0.5f,1.5f);
+            float n = Random.Range(0.5f, 1.5f);
             yield return new WaitForSeconds(n);
         }
     }
@@ -87,7 +68,7 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             SpawnArcher();
-            float n = Random.Range(0.5f,1.5f);
+            float n = Random.Range(0.5f, 1.5f);
             yield return new WaitForSeconds(n);
         }
     }
