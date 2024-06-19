@@ -58,6 +58,11 @@ public class Citizen : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+
+        if (TownGameManager.tgm.gameClear)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Attack()
