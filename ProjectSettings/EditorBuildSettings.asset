@@ -5,15 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/KWJ/Scenes/VRSetup.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scene/Climb Scene.unity
+    guid: f00114c1c83172b40a37b9fb726bcbcd
   - enabled: 1
     path: Assets/Scene/Citizen Scene.unity
     guid: 9244b73f562de6049b311e4844427b23
-  - enabled: 1
-    path: Assets/Scene/Zombie Scene.unity
-    guid: a9cef7bbe946ecb4695cd83df75d6c13
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7c282241cebb6b140a82a33616a4418f,
       type: 2}

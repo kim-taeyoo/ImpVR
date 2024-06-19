@@ -37,7 +37,7 @@ public class TownGameManager : MonoBehaviour
         remain = 200;
         healthPoints = 500;
 
-        remainCount.text = remain.ToString();
+        remainCount.text = "Remaining Enemies" + remain.ToString();
         hpSlider.minValue = 0;
         hpSlider.maxValue = healthPoints;
         hpSlider.value = healthPoints;

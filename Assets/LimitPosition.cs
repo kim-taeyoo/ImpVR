@@ -8,11 +8,17 @@ public class LimitPosition : MonoBehaviour
     public GameObject skillRange;
     public LayerMask layerMask;
 
+    bool isZombieStage = false;
+
     // Start is called before the first frame update
     void Start()
     {
         //lineRenderer = GetComponent<LineRenderer>();
         mainCamera = Camera.main;
+        if (GameObject.Find("ZombiePool") != null)
+        {
+            isZombieStage = true;
+        }
     }
 
     // Update is called once per frame
@@ -23,9 +29,16 @@ public class LimitPosition : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(transform.position.z < 1)
+        if (!isZombieStage)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, 1);
+            if (transform.position.z < 1)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, 1);
+            }
+            else if (transform.position.z > 25)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, 25);
+            }
         }
         MagicRay();
     }
@@ -40,12 +53,9 @@ public class LimitPosition : MonoBehaviour
             if (hit.collider.CompareTag("Plane"))
             {
                 Vector3 spawnPosition = hit.point;
-                //Quaternion spawnRotation = Quaternion.identity; // 필요에 따라 회전을 조정할 수 있음
                 
                 skillRange.SetActive(true);
                 skillRange.transform.position = hit.point;
-                //Instantiate(skillRange, spawnPosition, Quaternion.identity);
-                // 또는 이미 있는 오브젝트를 활성화시키는 등의 처리
             }
             else
             {
