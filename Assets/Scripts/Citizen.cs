@@ -48,7 +48,7 @@ public class Citizen : MonoBehaviour
             {
                 anim.SetBool("isMoving", false);
                 anim.SetBool("isAttacking", true);
-                //transform.LookAt(Player);
+                //transform.LookAt(Camera.main.transform);
             }
             else
             {
